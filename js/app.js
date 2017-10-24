@@ -1,30 +1,50 @@
-/*
- * Create a list that holds all of your cards
- */
- 
+$(function() {
+	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
+	//Updating the Array prototype so we can use .shuffle as an array method
+	Array.prototype.shuffle = function() {
+	    var input = this;
+	     
+	    for (var i = input.length - 1; i >= 0; i--) {
+	     
+	        var randomIndex = Math.floor(Math.random()*(i+1)); 
+	        var itemAtIndex = input[randomIndex]; 
+	         
+	        input[randomIndex] = input[i]; 
+	        input[i] = itemAtIndex;
+	    }
+	    return input;
+	}
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+	//Shuffle the deck
+	//Add shuffled card to DOM
+	//Display the cards face-down on the page
 
-//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
-//Updating the Array prototype so we can use .shuffle as an array method
-Array.prototype.shuffle = function() {
-    var input = this;
-     
-    for (var i = input.length-1; i >=0; i--) {
-     
-        var randomIndex = Math.floor(Math.random()*(i+1)); 
-        var itemAtIndex = input[randomIndex]; 
-         
-        input[randomIndex] = input[i]; 
-        input[i] = itemAtIndex;
-    }
-    return input;
-}
+	 function generateNewGame() {
+	 	var cards = [
+			'fa fa-diamond',
+			'fa fa-paper-plane-o',
+			'fa fa-anchor',
+			'fa fa-bolt',
+			'fa fa-leaf',
+			'fa fa-bicycle',
+			'fa fa-cube',
+			'fa fa-bomb',
+			'fa fa-diamond',
+			'fa fa-paper-plane-o',
+			'fa fa-anchor',
+			'fa fa-bolt',
+			'fa fa-leaf',
+			'fa fa-bicycle',
+			'fa fa-cube',
+			'fa fa-bomb'
+		];
+		cards.shuffle();
+		cards.forEach(function(card) {
+			$('.deck').append('<li class="card"><i class="' + card + '"></i></li>');
+		});
+	}
+
+	generateNewGame();
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -36,3 +56,6 @@ Array.prototype.shuffle = function() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+});
+
+

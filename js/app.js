@@ -15,11 +15,9 @@ $(function() {
 	    return input;
 	}
 
-	//Shuffle the deck
-	//Add shuffled card to DOM
+	//Shuffle the deck and add cards to DOM
 	//Display the cards face-down on the page
-
-	 function generateNewGame() {
+	function generateNewGame() {
 	 	var cards = [
 			'fa fa-diamond',
 			'fa fa-paper-plane-o',
@@ -43,6 +41,19 @@ $(function() {
 			$('.deck').append('<li class="card"><i class="' + card + '"></i></li>');
 		});
 	}
+
+	function displayCard(e) {
+		//display card
+	}
+
+	$('.restart').click(function() {
+		//ask user if they really want to restart
+		//TODO: Make this a modal
+		if(confirm('Are you sure you wish to restart?')) {
+			$('.card').remove();
+			generateNewGame();
+		}
+	});
 
 	generateNewGame();
 

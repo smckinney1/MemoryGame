@@ -1,7 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
-
+ 
 
 /*
  * Display the cards on the page
@@ -10,21 +10,21 @@
  *   - add each card's HTML to the page
  */
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
+//Updating the Array prototype so we can use .shuffle as an array method
+Array.prototype.shuffle = function() {
+    var input = this;
+     
+    for (var i = input.length-1; i >=0; i--) {
+     
+        var randomIndex = Math.floor(Math.random()*(i+1)); 
+        var itemAtIndex = input[randomIndex]; 
+         
+        input[randomIndex] = input[i]; 
+        input[i] = itemAtIndex;
     }
-
-    return array;
+    return input;
 }
-
 
 /*
  * set up the event listener for a card. If a card is clicked:

@@ -3,6 +3,20 @@ $(function() {
 	//TODO: Get this into a function
 	var openCards = [];
 	var score = 0;
+	var listOfCardClasses = [
+		'fa fa-diamond',
+		'fa fa-paper-plane-o',
+		'fa fa-anchor',
+		'fa fa-bolt',
+		'fa fa-leaf',
+		'fa fa-bicycle',
+		'fa fa-cube',
+		'fa fa-bomb'
+	];
+
+	var listOfCards = [];
+
+	var openCards = [];
 
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 	//Updating the Array prototype so we can use .shuffle as an array method
@@ -20,31 +34,33 @@ $(function() {
 	    return input;
 	}
 
+	function Card(cardClass) {
+		this.cardClass = cardClass;
+		this.isOpen = false;
+	}
+
+	Card.prototype.open = function() {
+		//change class of card to include "open"
+		//possibly turn this into "flip" instead of "open" depending on functionality requirements
+	}
+
 	//Shuffle the deck and add cards to DOM
 	//Display the cards face-down on the page
 	function generateNewGame() {
-	 	var cards = [
-			'fa fa-diamond',
-			'fa fa-paper-plane-o',
-			'fa fa-anchor',
-			'fa fa-bolt',
-			'fa fa-leaf',
-			'fa fa-bicycle',
-			'fa fa-cube',
-			'fa fa-bomb',
-			'fa fa-diamond',
-			'fa fa-paper-plane-o',
-			'fa fa-anchor',
-			'fa fa-bolt',
-			'fa fa-leaf',
-			'fa fa-bicycle',
-			'fa fa-cube',
-			'fa fa-bomb'
-		];
-		cards.shuffle();
-		cards.forEach(function(card) {
-			$('.deck').append('<li class="card"><i class="' + card + '"></i></li>');
+
+		listOfCardClasses.forEach(function(cardClass) {
+			var card = new Card(cardClass);
+			//push two of each card to list of cards
+			listOfCards.push(card, card);
 		});
+
+		listOfCards.shuffle();
+		listOfCards.forEach(function(card) {
+			$('.deck').append('<li class="card"><i class="' + card.cardClass + '"></i></li>');
+		});
+
+		console.log(listOfCards);
+
 	}
 
 	function displayCard(e) {

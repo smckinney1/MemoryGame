@@ -1,4 +1,9 @@
 $(function() {
+
+	//TODO: Get this into a function
+	var openCards = [];
+	var score = 0;
+
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 	//Updating the Array prototype so we can use .shuffle as an array method
 	Array.prototype.shuffle = function() {
@@ -43,8 +48,20 @@ $(function() {
 	}
 
 	function displayCard(e) {
+		//add card to list of open cards
+		////ensure only 2 cards open at once --> might control this through a different function
 		//display card
+		if (openCards.length === 0) {
+			//show the card and push it to array
+		} else if (openCards.length === 1) {
+			//show the card, push it to the array, and 
+		}
+		var cardType = this.firstElementChild.getAttribute('class');
+		openCards.push(cardType);
+		console.log(openCards);
 	}
+
+	$('.deck').on('click', '.card', displayCard);
 
 	$('.restart').click(function() {
 		//ask user if they really want to restart

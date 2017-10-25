@@ -14,8 +14,6 @@ $(function() {
 		'fa fa-bomb'
 	];
 
-	var listOfCards = [];
-
 	var openCards = [];
 
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
@@ -47,6 +45,8 @@ $(function() {
 	//Shuffle the deck and add cards to DOM
 	//Display the cards face-down on the page
 	function generateNewGame() {
+
+		listOfCards = [];
 
 		listOfCardClasses.forEach(function(cardClass) {
 			var card = new Card(cardClass);

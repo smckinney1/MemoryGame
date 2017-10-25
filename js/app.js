@@ -3,18 +3,6 @@ $(function() {
 	//TODO: Get this into a function
 	var openCards = [];
 	var score = 0;
-	var listOfCardClasses = [
-		'fa fa-diamond',
-		'fa fa-paper-plane-o',
-		'fa fa-anchor',
-		'fa fa-bolt',
-		'fa fa-leaf',
-		'fa fa-bicycle',
-		'fa fa-cube',
-		'fa fa-bomb'
-	];
-
-	var openCards = [];
 
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 	//Updating the Array prototype so we can use .shuffle as an array method
@@ -46,35 +34,50 @@ $(function() {
 	//Display the cards face-down on the page
 	function generateNewGame() {
 
+		var listOfCardClasses = [
+			'fa fa-diamond',
+			'fa fa-paper-plane-o',
+			'fa fa-anchor',
+			'fa fa-bolt',
+			'fa fa-leaf',
+			'fa fa-bicycle',
+			'fa fa-cube',
+			'fa fa-bomb'
+		];
+
 		listOfCards = [];
 
+		//generate a new card for each class and add it twice to the list of cards
+		//this allows 16 cards to be generated on the screen
 		listOfCardClasses.forEach(function(cardClass) {
 			var card = new Card(cardClass);
-			//push two of each card to list of cards
 			listOfCards.push(card, card);
 		});
 
+		//shuffle the cards and add the correct CSS class to each one
 		listOfCards.shuffle();
 		listOfCards.forEach(function(card) {
 			$('.deck').append('<li class="card"><i class="' + card.cardClass + '"></i></li>');
 		});
-
-		console.log(listOfCards);
-
 	}
 
 	function displayCard(e) {
 		//add card to list of open cards
 		////ensure only 2 cards open at once --> might control this through a different function
 		//display card
-		if (openCards.length === 0) {
-			//show the card and push it to array
-		} else if (openCards.length === 1) {
-			//show the card, push it to the array, and 
-		}
-		var cardType = this.firstElementChild.getAttribute('class');
-		openCards.push(cardType);
-		console.log(openCards);
+		this.setAttribute('class', 'card open show');
+
+		// if (openCards.length === 0) {
+		// 	//show the card and push it to array
+			
+
+		// } else if (openCards.length === 1) {
+		// 	//show the card, push it to the array, and 
+		// }
+
+		// var cardType = this.firstElementChild.getAttribute('class');
+		// openCards.push(cardType);
+		// console.log(openCards);
 	}
 
 	$('.deck').on('click', '.card', displayCard);

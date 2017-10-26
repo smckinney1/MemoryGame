@@ -24,19 +24,24 @@ $(function() {
 	function Card(cardClass) {
 		this.cardClass = cardClass;
 		this.isOpen = false;
+		//creating a new element for the DOM - not actually appending it here
+		this.listItem = $('<li class="card"><i class="' + cardClass + '"></i></li>');
 	}
 
-/*	Card.prototype.open = function() {
+	Card.prototype.show = function() {
 		//change class of card to include "open"
 		//possibly turn this into "flip" instead of "open" depending on functionality requirements
-		if (openCards.length === 0 || open.cards.length === 1) {
-			openCards.push(card.firstElementChild.getAttribute('class'));
-			card.setAttribute('class', 'card open show');
-			return true;
-		}
-		return false;
+		// if (openCards.length === 0 || open.cards.length === 1) {
+		// 	openCards.push(card.firstElementChild.getAttribute('class'));
+		// 	card.setAttribute('class', 'card open show');
+		// 	return true;
+		// }
+		// return false;
 		//TODO: card.isOpen = true....
-	}*/
+
+
+
+	}
 
 	//Shuffle the deck and add cards to DOM
 	//Display the cards face-down on the page
@@ -58,17 +63,17 @@ $(function() {
 		//generate a new card for each class and add it twice to the list of cards
 		//this allows 16 cards to be generated on the screen
 		listOfCardClasses.forEach(function(cardClass) {
-			var card = new Card(cardClass);
-			listOfCards.push(card, card);
+			//create 2 card with same class and push to list
+			var card1 = new Card(cardClass);
+			var card2 = new Card(cardClass);
+			listOfCards.push(card1, card2);
 		});
 
 		//shuffle the cards and add the correct CSS class to each one
 		listOfCards.shuffle();
 		listOfCards.forEach(function(card) {
-			$('.deck').append('<li class="card"><i class="' + card.cardClass + '"></i></li>');
+			$('.deck').append(card.listItem);
 		});
-
-		return listOfCards;
 	}
 
 	function onCardClick(e) {
@@ -76,7 +81,6 @@ $(function() {
 		////ensure only 2 cards open at once --> might control this through a different function
 		//display card
 		clickedCards.push(this);
-		console.log(clickedCards);
 
 		this.classList.add('open', 'show');
 
@@ -109,7 +113,6 @@ $(function() {
 
 	//TODO: Is this the best way to get the list of cards out of generateNewGame? Would it be better to simply have listOfCards be global and then change it within generateNewGame?
 	var listOfCards = generateNewGame();
-	console.log(listOfCards);
 
 /*
  * set up the event listener for a card. If a card is clicked:

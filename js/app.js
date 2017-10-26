@@ -3,6 +3,7 @@ $(function() {
 	//TODO: Get this into a function
 	var openCards = [];
 	var score = 0;
+	var clickedCards = [];
 
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 	//Updating the Array prototype so we can use .shuffle as an array method
@@ -25,10 +26,17 @@ $(function() {
 		this.isOpen = false;
 	}
 
-	Card.prototype.open = function() {
+/*	Card.prototype.open = function() {
 		//change class of card to include "open"
 		//possibly turn this into "flip" instead of "open" depending on functionality requirements
-	}
+		if (openCards.length === 0 || open.cards.length === 1) {
+			openCards.push(card.firstElementChild.getAttribute('class'));
+			card.setAttribute('class', 'card open show');
+			return true;
+		}
+		return false;
+		//TODO: card.isOpen = true....
+	}*/
 
 	//Shuffle the deck and add cards to DOM
 	//Display the cards face-down on the page
@@ -59,28 +67,32 @@ $(function() {
 		listOfCards.forEach(function(card) {
 			$('.deck').append('<li class="card"><i class="' + card.cardClass + '"></i></li>');
 		});
+
+		return listOfCards;
 	}
 
-	function displayCard(e) {
+	function onCardClick(e) {
 		//add card to list of open cards
 		////ensure only 2 cards open at once --> might control this through a different function
 		//display card
-		this.setAttribute('class', 'card open show');
+		clickedCards.push(this);
+		console.log(clickedCards);
+		//TODO: Use ELement.classList.add('class-name')
+		this.classList.add('open', 'show');
 
-		// if (openCards.length === 0) {
-		// 	//show the card and push it to array
-			
-
-		// } else if (openCards.length === 1) {
-		// 	//show the card, push it to the array, and 
-		// }
-
-		// var cardType = this.firstElementChild.getAttribute('class');
-		// openCards.push(cardType);
-		// console.log(openCards);
+		if (clickedCards.length === 2) {
+			var card1Class = clickedCards[0].firstElementChild.getAttribute('class');
+			var card2Class = clickedCards[1].firstElementChild.getAttribute('class');
+			if (card1Class === card2Class) {
+				clickedCards[0].classList.add('match');
+				clickedCards[1].classList.add('match');
+			} else {
+				console.log('no match');
+			}
+		}
 	}
 
-	$('.deck').on('click', '.card', displayCard);
+	$('.deck').on('click', '.card', onCardClick);
 
 	$('.restart').click(function() {
 		//ask user if they really want to restart
@@ -91,7 +103,9 @@ $(function() {
 		}
 	});
 
-	generateNewGame();
+	//TODO: Is this the best way to get the list of cards out of generateNewGame? Would it be better to simply have listOfCards be global and then change it within generateNewGame?
+	var listOfCards = generateNewGame();
+	console.log(listOfCards);
 
 /*
  * set up the event listener for a card. If a card is clicked:

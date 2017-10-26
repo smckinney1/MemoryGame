@@ -24,8 +24,19 @@ $(function() {
 	function Card(cardClass) {
 		this.cardClass = cardClass;
 		this.isOpen = false;
+
 		//creating a new element for the DOM - not actually appending it here
 		this.listItem = $('<li class="card"><i class="' + cardClass + '"></i></li>');
+
+		//attaching the click handler within the object
+		this.listItem.on('click', this.onCardClick);
+	}
+
+	//click handler for Card constructor
+	Card.prototype.onCardClick = function() {
+		clickedCards.push(this);
+		this.isOpen = true;
+		console.log(clickedCards, this.isOpen);
 	}
 
 	Card.prototype.show = function() {
@@ -37,10 +48,8 @@ $(function() {
 		// 	return true;
 		// }
 		// return false;
-		//TODO: card.isOpen = true....
-
-
-
+		this.isOpen = true;
+		this.classList.add('open', 'show');
 	}
 
 	//Shuffle the deck and add cards to DOM
@@ -58,7 +67,7 @@ $(function() {
 			'fa fa-bomb'
 		];
 
-		listOfCards = [];
+		var listOfCards = [];
 
 		//generate a new card for each class and add it twice to the list of cards
 		//this allows 16 cards to be generated on the screen
@@ -80,27 +89,28 @@ $(function() {
 		//add card to list of open cards
 		////ensure only 2 cards open at once --> might control this through a different function
 		//display card
-		clickedCards.push(this);
+		
+		console.log(clickedCards);
 
-		this.classList.add('open', 'show');
+		// this.classList.add('open', 'show');
 
-		if (clickedCards.length === 2) {
-			var card1Class = clickedCards[0].firstElementChild.getAttribute('class');
-			var card2Class = clickedCards[1].firstElementChild.getAttribute('class');
+		// if (clickedCards.length === 2) {
+		// 	var card1Class = clickedCards[0].firstElementChild.getAttribute('class');
+		// 	var card2Class = clickedCards[1].firstElementChild.getAttribute('class');
 
-			if (card1Class === card2Class) {
-				clickedCards[0].classList.add('match');
-				clickedCards[1].classList.add('match');
-			} else {
-				setTimeout(function() {
-					clickedCards[0].firstElementChild.setAttribute('class', 'card');
-					clickedCards[1].firstElementChild.setAttribute('class', 'card');
-				}, 2000);
-			}
-		}
+		// 	if (card1Class === card2Class) {
+		// 		clickedCards[0].classList.add('match');
+		// 		clickedCards[1].classList.add('match');
+		// 	} else {
+		// 		setTimeout(function() {
+		// 			clickedCards[0].firstElementChild.setAttribute('class', 'card');
+		// 			clickedCards[1].firstElementChild.setAttribute('class', 'card');
+		// 		}, 2000);
+		// 	}
+		// }
 	}
 
-	$('.deck').on('click', '.card', onCardClick);
+	//$('.deck').on('click', '.card', onCardClick);
 
 	$('.restart').click(function() {
 		//ask user if they really want to restart
@@ -112,7 +122,7 @@ $(function() {
 	});
 
 	//TODO: Is this the best way to get the list of cards out of generateNewGame? Would it be better to simply have listOfCards be global and then change it within generateNewGame?
-	var listOfCards = generateNewGame();
+	generateNewGame();
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -125,5 +135,9 @@ $(function() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 });
+
+
+
+//Card should be handling the click
 
 

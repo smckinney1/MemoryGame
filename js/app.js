@@ -77,17 +77,21 @@ $(function() {
 		//display card
 		clickedCards.push(this);
 		console.log(clickedCards);
-		//TODO: Use ELement.classList.add('class-name')
+
 		this.classList.add('open', 'show');
 
 		if (clickedCards.length === 2) {
 			var card1Class = clickedCards[0].firstElementChild.getAttribute('class');
 			var card2Class = clickedCards[1].firstElementChild.getAttribute('class');
+
 			if (card1Class === card2Class) {
 				clickedCards[0].classList.add('match');
 				clickedCards[1].classList.add('match');
 			} else {
-				console.log('no match');
+				setTimeout(function() {
+					clickedCards[0].firstElementChild.setAttribute('class', 'card');
+					clickedCards[1].firstElementChild.setAttribute('class', 'card');
+				}, 2000);
 			}
 		}
 	}

@@ -1,9 +1,11 @@
 $(function() {
 
-	//TODO: Get this into a function
-	var openCards = [];
-	var score = 0;
-	var clickedCards = [];
+	var gameData = {
+		openCards: [],
+		score: 0,
+		matches: 0,
+		clickedCards: []
+	}
 
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 	//Updating the Array prototype so we can use .shuffle as an array method
@@ -46,17 +48,31 @@ $(function() {
 		//if 1 card is shown: add new card to shown cards list, then check for match
 		//if 0 cards are shown: add new card to shown cards list
 		//ON MATCH: Clear the array of shown cards, change the class to include 'match'
-		if (clickedCards.length === 2) {
-			var card1Class = clickedCards[0].firstElementChild.getAttribute('class');
-			var card2Class = clickedCards[1].firstElementChild.getAttribute('class');
+		if (gameData.clickedCards.length === 2) {
+			var card1Class = gameData.clickedCards[0].firstElementChild.getAttribute('class');
+			var card2Class = gameData.clickedCards[1].firstElementChild.getAttribute('class');
 
 			if (card1Class === card2Class) {
-				clickedCards[0].classList.add('match');
-				clickedCards[1].classList.add('match');
+				gameData.clickedCards[0].classList.add('match');
+				gameData.clickedCards[1].classList.add('match');
+				gameData.matches += 1;
+				console.log(gameData);
+
+				//Alert **after** the other card has been flipped.
+				//TODO: Turn this into a modal
+				setTimeout(function(){
+					if (gameData.matches === 8) {
+						alert('Game over, all cards matched');
+					}
+				}, 1000);
+
+				gameData.clickedCards = [];
+
 			} else {
 				setTimeout(function() {
-					clickedCards[0].firstElementChild.setAttribute('class', 'card');
-					clickedCards[1].firstElementChild.setAttribute('class', 'card');
+					gameData.clickedCards[0].firstElementChild.setAttribute('class', 'card');
+					gameData.clickedCards[1].firstElementChild.setAttribute('class', 'card');
+					gameData.clickedCards = [];
 				}, 2000);
 			}
 		}
@@ -64,9 +80,8 @@ $(function() {
 
 	//click handler for Card constructor
 	Card.prototype.onCardClick = function(e) {
-
 		var clickedEl = e.target;
-		clickedCards.push(clickedEl);
+		gameData.clickedCards.push(clickedEl);
 		clickedEl.classList.add('open', 'show');
 		this.checkMatch();
 	}

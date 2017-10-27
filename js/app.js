@@ -28,26 +28,40 @@ $(function() {
 		//creating a new element for the DOM - not actually appending it here
 		this.listItem = $('<li class="card"><i class="' + cardClass + '"></i></li>');
 
-		//attaching the click handler within the object
-		this.listItem.on('click', this.onCardClick);
+		//preserve the context of "this"
+		var self = this;
+		
+		this.listItem.on('click', function (e) {
+			//below function will carry the context of the card with it
+			//this = <li>...</li>
+			//self = the context of this card
+			self.onCardClick(e);
+		});
+
+	}
+
+	Card.prototype.checkMatch = function() {
+		console.log('wooo');
 	}
 
 	//click handler for Card constructor
-	Card.prototype.onCardClick = function() {
-		clickedCards.push(this);
-		this.isOpen = true;
-		console.log(clickedCards, this.isOpen);
+	Card.prototype.onCardClick = function(e) {
+
+		var clickedEl = e.target;
+		clickedCards.push(clickedEl);
+		clickedEl.classList.add('open', 'show');
+		//this.checkMatch();
+/*		if (clickedCards.length === 1) {
+
+		} else {
+			clickedCards.push(this);
+		}*/
+
+		//this.isOpen = true;
 	}
 
 	Card.prototype.show = function() {
-		//change class of card to include "open"
-		//possibly turn this into "flip" instead of "open" depending on functionality requirements
-		// if (openCards.length === 0 || open.cards.length === 1) {
-		// 	openCards.push(card.firstElementChild.getAttribute('class'));
-		// 	card.setAttribute('class', 'card open show');
-		// 	return true;
-		// }
-		// return false;
+		//update class of card to include "open show"
 		this.isOpen = true;
 		this.classList.add('open', 'show');
 	}
@@ -90,9 +104,7 @@ $(function() {
 		////ensure only 2 cards open at once --> might control this through a different function
 		//display card
 		
-		console.log(clickedCards);
-
-		// this.classList.add('open', 'show');
+		console.log('fjslkdgjksdg');
 
 		// if (clickedCards.length === 2) {
 		// 	var card1Class = clickedCards[0].firstElementChild.getAttribute('class');
@@ -110,8 +122,6 @@ $(function() {
 		// }
 	}
 
-	//$('.deck').on('click', '.card', onCardClick);
-
 	$('.restart').click(function() {
 		//ask user if they really want to restart
 		//TODO: Make this a modal
@@ -121,7 +131,6 @@ $(function() {
 		}
 	});
 
-	//TODO: Is this the best way to get the list of cards out of generateNewGame? Would it be better to simply have listOfCards be global and then change it within generateNewGame?
 	generateNewGame();
 
 /*

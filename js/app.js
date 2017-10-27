@@ -30,18 +30,36 @@ $(function() {
 
 		//preserve the context of "this"
 		var self = this;
-		
+
 		this.listItem.on('click', function (e) {
 			//below function will carry the context of the card with it
 			//this = <li>...</li>
 			//self = the context of this card
+
+			//TODO: Prevent anything from happening if card has already been clicked (use this.isOpen)
 			self.onCardClick(e);
 		});
 
 	}
 
 	Card.prototype.checkMatch = function() {
-		console.log('wooo');
+		//if 1 card is shown: add new card to shown cards list, then check for match
+		//if 0 cards are shown: add new card to shown cards list
+		//ON MATCH: Clear the array of shown cards, change the class to include 'match'
+		if (clickedCards.length === 2) {
+			var card1Class = clickedCards[0].firstElementChild.getAttribute('class');
+			var card2Class = clickedCards[1].firstElementChild.getAttribute('class');
+
+			if (card1Class === card2Class) {
+				clickedCards[0].classList.add('match');
+				clickedCards[1].classList.add('match');
+			} else {
+				setTimeout(function() {
+					clickedCards[0].firstElementChild.setAttribute('class', 'card');
+					clickedCards[1].firstElementChild.setAttribute('class', 'card');
+				}, 2000);
+			}
+		}
 	}
 
 	//click handler for Card constructor
@@ -50,14 +68,7 @@ $(function() {
 		var clickedEl = e.target;
 		clickedCards.push(clickedEl);
 		clickedEl.classList.add('open', 'show');
-		//this.checkMatch();
-/*		if (clickedCards.length === 1) {
-
-		} else {
-			clickedCards.push(this);
-		}*/
-
-		//this.isOpen = true;
+		this.checkMatch();
 	}
 
 	Card.prototype.show = function() {
@@ -97,29 +108,6 @@ $(function() {
 		listOfCards.forEach(function(card) {
 			$('.deck').append(card.listItem);
 		});
-	}
-
-	function onCardClick(e) {
-		//add card to list of open cards
-		////ensure only 2 cards open at once --> might control this through a different function
-		//display card
-		
-		console.log('fjslkdgjksdg');
-
-		// if (clickedCards.length === 2) {
-		// 	var card1Class = clickedCards[0].firstElementChild.getAttribute('class');
-		// 	var card2Class = clickedCards[1].firstElementChild.getAttribute('class');
-
-		// 	if (card1Class === card2Class) {
-		// 		clickedCards[0].classList.add('match');
-		// 		clickedCards[1].classList.add('match');
-		// 	} else {
-		// 		setTimeout(function() {
-		// 			clickedCards[0].firstElementChild.setAttribute('class', 'card');
-		// 			clickedCards[1].firstElementChild.setAttribute('class', 'card');
-		// 		}, 2000);
-		// 	}
-		// }
 	}
 
 	$('.restart').click(function() {

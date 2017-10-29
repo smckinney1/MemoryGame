@@ -47,7 +47,9 @@ $(function() {
 	//click handler for Card constructor
 	Card.prototype.onCardClick = function(e) {
 		var clickedEl = e.target;
-		if (this.isOpen) {
+
+		//If a card is already open, or if there are already 2 cards clicked on the screen, don't proceed.
+		if (this.isOpen || gameData.clickedCards.length === 2) {
 			return false;
 		}
 
@@ -89,7 +91,7 @@ $(function() {
 					card2.setAttribute('class', 'card');
 					gameData.clickedCards.forEach(function(card) {
 						card.isOpen = false;
-					})
+					});
 					gameData.clickedCards = [];
 				}, 2000);
 			}

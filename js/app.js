@@ -5,7 +5,8 @@ $(function() {
 		score: 0, //may combine with 'moves' later
 		moves: 0,
 		matches: 0,
-		clickedCards: []
+		clickedCards: [],
+		starsHTML: '<li><i class="fa fa-star"></i></li>'
 	}
 
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
@@ -53,8 +54,7 @@ $(function() {
 		}
 
 		var clickedEl = e.target;
-		gameData.moves++;
-		$('.moves').text(gameData.moves);
+
 		gameData.clickedCards.push(this);
 		clickedEl.classList.add('open', 'show');
 		this.isOpen = true;
@@ -71,6 +71,15 @@ $(function() {
 			var card1Class = card1.firstElementChild.getAttribute('class');
 			var card2Class = card2.firstElementChild.getAttribute('class');
 
+			gameData.moves++;
+			$('.moves').text(gameData.moves);
+
+			if (gameData.moves > 12 && gameData.moves < 19) {
+				$('.stars').html(gameData.starsHTML + gameData.starsHTML);
+			} else if (gameData.moves >= 19) {
+				$('.stars').html(gameData.starsHTML);
+			}
+
 			if (card1Class === card2Class) {
 				card1.classList.add('match');
 				card2.classList.add('match');
@@ -81,7 +90,7 @@ $(function() {
 				setTimeout(function(){
 					if (gameData.matches === 8) {
 						//TODO: Make this a modal, ask if want to play again, if yes reset the board, else do nothing
-						alert('Game over, all cards matched');
+						alert('Game over, all cards matched. Your final score is [count of stars on screen]');
 					}
 				}, 1000);
 

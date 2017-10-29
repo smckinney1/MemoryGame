@@ -47,12 +47,11 @@ $(function() {
 	//click handler for Card constructor
 	Card.prototype.onCardClick = function(e) {
 		var clickedEl = e.target;
-		
 		if (this.isOpen) {
 			return false;
 		}
 
-		gameData.clickedCards.push(clickedEl);
+		gameData.clickedCards.push(this);
 		clickedEl.classList.add('open', 'show');
 		this.isOpen = true;
 		this.checkMatch();
@@ -63,14 +62,15 @@ $(function() {
 		//if 0 cards are shown: add new card to shown cards list
 		//ON MATCH: Clear the array of shown cards, change the class to include 'match'
 		if (gameData.clickedCards.length === 2) {
-			var card1Class = gameData.clickedCards[0].firstElementChild.getAttribute('class');
-			var card2Class = gameData.clickedCards[1].firstElementChild.getAttribute('class');
+			var card1 = gameData.clickedCards[0].listItem[0];
+			var card2 = gameData.clickedCards[1].listItem[0];
+			var card1Class = card1.firstElementChild.getAttribute('class');
+			var card2Class = card2.firstElementChild.getAttribute('class');
 
 			if (card1Class === card2Class) {
-				gameData.clickedCards[0].classList.add('match');
-				gameData.clickedCards[1].classList.add('match');
+				card1.classList.add('match');
+				card2.classList.add('match');
 				gameData.matches += 1;
-				console.log(gameData);
 
 				//Alert **after** the other card has been flipped.
 				//TODO: Turn this into a modal
@@ -84,9 +84,11 @@ $(function() {
 
 			} else {
 				setTimeout(function() {
-					gameData.clickedCards[0].firstElementChild.setAttribute('class', 'card');
-					gameData.clickedCards[1].firstElementChild.setAttribute('class', 'card');
-					//this.isOpen = false;
+					card1.firstElementChild.setAttribute('class', 'card');
+					card2.firstElementChild.setAttribute('class', 'card');
+					// gameData.clickedCards.forEach(function() {
+					// 	console.log(this)
+					// })
 					gameData.clickedCards = [];
 				}, 2000);
 			}

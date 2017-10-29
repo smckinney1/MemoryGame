@@ -90,7 +90,7 @@ $(function() {
 				setTimeout(function(){
 					if (gameData.matches === 8) {
 						//TODO: Make this a modal, ask if want to play again, if yes reset the board, else do nothing
-						alert('Game over, all cards matched. Your final score is [count of stars on screen]');
+						alert('Game over, all cards matched. Your final score is ' + $('.stars').length + ' stars.');
 					}
 				}, 1000);
 

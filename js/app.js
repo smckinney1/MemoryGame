@@ -47,8 +47,14 @@ $(function() {
 	//click handler for Card constructor
 	Card.prototype.onCardClick = function(e) {
 		var clickedEl = e.target;
+		
+		if (this.isOpen) {
+			return false;
+		}
+
 		gameData.clickedCards.push(clickedEl);
 		clickedEl.classList.add('open', 'show');
+		this.isOpen = true;
 		this.checkMatch();
 	}
 
@@ -80,6 +86,7 @@ $(function() {
 				setTimeout(function() {
 					gameData.clickedCards[0].firstElementChild.setAttribute('class', 'card');
 					gameData.clickedCards[1].firstElementChild.setAttribute('class', 'card');
+					//this.isOpen = false;
 					gameData.clickedCards = [];
 				}, 2000);
 			}

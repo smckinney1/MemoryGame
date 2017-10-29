@@ -76,6 +76,7 @@ $(function() {
 				//TODO: Turn this into a modal
 				setTimeout(function(){
 					if (gameData.matches === 8) {
+						//TODO: Make this a modal, ask if want to play again, if yes reset the board, else do nothing
 						alert('Game over, all cards matched');
 					}
 				}, 1000);
@@ -86,9 +87,9 @@ $(function() {
 				setTimeout(function() {
 					card1.firstElementChild.setAttribute('class', 'card');
 					card2.firstElementChild.setAttribute('class', 'card');
-					// gameData.clickedCards.forEach(function() {
-					// 	console.log(this)
-					// })
+					gameData.clickedCards.forEach(function(card) {
+						card.isOpen = false;
+					})
 					gameData.clickedCards = [];
 				}, 2000);
 			}

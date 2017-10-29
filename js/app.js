@@ -85,8 +85,8 @@ $(function() {
 
 			} else {
 				setTimeout(function() {
-					card1.firstElementChild.setAttribute('class', 'card');
-					card2.firstElementChild.setAttribute('class', 'card');
+					card1.setAttribute('class', 'card');
+					card2.setAttribute('class', 'card');
 					gameData.clickedCards.forEach(function(card) {
 						card.isOpen = false;
 					})

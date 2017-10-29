@@ -2,7 +2,8 @@ $(function() {
 
 	var gameData = {
 		openCards: [],
-		score: 0,
+		score: 0, //may combine with 'moves' later
+		moves: 0,
 		matches: 0,
 		clickedCards: []
 	}
@@ -46,13 +47,14 @@ $(function() {
 
 	//click handler for Card constructor
 	Card.prototype.onCardClick = function(e) {
-		var clickedEl = e.target;
-
 		//If a card is already open, or if there are already 2 cards clicked on the screen, don't proceed.
 		if (this.isOpen || gameData.clickedCards.length === 2) {
 			return false;
 		}
 
+		var clickedEl = e.target;
+		gameData.moves++;
+		$('.moves').text(gameData.moves);
 		gameData.clickedCards.push(this);
 		clickedEl.classList.add('open', 'show');
 		this.isOpen = true;
@@ -107,6 +109,14 @@ $(function() {
 	//Shuffle the deck and add cards to DOM
 	//Display the cards face-down on the page
 	function generateNewGame() {
+
+		//reset all game data
+		gameData.openCards = [];
+		gameData.score = 0;
+		gameData.moves = 0;
+		gameData.matches = 0;
+		gameData.clickedCards = [];
+		$('.moves').text(0);
 
 		var listOfCardClasses = [
 			'fa fa-diamond',

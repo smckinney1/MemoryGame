@@ -24,16 +24,16 @@ $(function() {
 	}
 
 	function Card(cardClass) {
-		this.cardClass = cardClass;
-		this.isOpen = false;
-
-		//creating a new element for the DOM - not actually appending it here
-		this.listItem = $('<li class="card"><i class="' + cardClass + '"></i></li>');
-
 		//preserve the context of "this"
 		var self = this;
+		
+		self.cardClass = cardClass;
+		self.isOpen = false;
 
-		this.listItem.on('click', function (e) {
+		//creating a new element for the DOM - not actually appending it here
+		self.listItem = $('<li class="card"><i class="' + cardClass + '"></i></li>');
+
+		self.listItem.on('click', function (e) {
 			//below function will carry the context of the card with it
 			//this = <li>...</li>
 			//self = the context of this card
@@ -42,6 +42,14 @@ $(function() {
 			self.onCardClick(e);
 		});
 
+	}
+
+	//click handler for Card constructor
+	Card.prototype.onCardClick = function(e) {
+		var clickedEl = e.target;
+		gameData.clickedCards.push(clickedEl);
+		clickedEl.classList.add('open', 'show');
+		this.checkMatch();
 	}
 
 	Card.prototype.checkMatch = function() {
@@ -78,19 +86,11 @@ $(function() {
 		}
 	}
 
-	//click handler for Card constructor
-	Card.prototype.onCardClick = function(e) {
-		var clickedEl = e.target;
-		gameData.clickedCards.push(clickedEl);
-		clickedEl.classList.add('open', 'show');
-		this.checkMatch();
-	}
-
-	Card.prototype.show = function() {
+/*	Card.prototype.show = function() {
 		//update class of card to include "open show"
 		this.isOpen = true;
 		this.classList.add('open', 'show');
-	}
+	}*/
 
 	//Shuffle the deck and add cards to DOM
 	//Display the cards face-down on the page
@@ -147,9 +147,4 @@ $(function() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 });
-
-
-
-//Card should be handling the click
-
 

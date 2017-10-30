@@ -126,6 +126,8 @@ $(function() {
 		gameData.matches = 0;
 		gameData.clickedCards = [];
 		$('.moves').text(0);
+		$('.stars').empty();
+		$('.stars').append(gameData.starsHTML + gameData.starsHTML + gameData.starsHTML);
 
 		var listOfCardClasses = [
 			'fa fa-diamond',

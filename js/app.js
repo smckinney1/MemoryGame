@@ -9,7 +9,6 @@ $(function() {
 		starsHTML: '<li><i class="fa fa-star"></i></li>'
 	};
 
-	//TODO: Turn this into constructor?
 	var modalData = {
 		modal: $('#simpleModal'),
 		closeBtn: $('#closeBtn'),
@@ -18,14 +17,16 @@ $(function() {
 			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' stars.')
 		},
 		closeModal: function(e) {
-			if (e.target == modalData.modal || e.target == modalData.closeBtn) {
-				console.log('x');
-				//modalData.modal[0].style.display = 'none';
+			if (e.target == modalData.modal[0] || e.target == modalData.closeBtn[0]) {
+				modalData.modal[0].style.display = 'none';
 			}
 		}
 	};
 
+	//TODO: This line is for testing.
 	$('h1').click(modalData.openModal);
+
+	//Close modal if someone clicks on "X" within the modal, or they click outside of the modal
 	$(modalData.closeBtn).click(modalData.closeModal);
 	$(window).click(modalData.closeModal);
 
@@ -110,7 +111,7 @@ $(function() {
 				setTimeout(function(){
 					if (gameData.matches === 8) {
 						//TODO: Make this a modal, ask if want to play again, if yes reset the board, else do nothing
-						//alert('Game over, all cards matched. Your final score is ' + $('.stars').length + ' stars.');
+						//alert('Game over, all cards matched. Your final score is ' + $('.stars li').length + ' stars.');
 						//modalData.openModal();
 					}
 				}, 1000);

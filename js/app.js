@@ -23,13 +23,6 @@ $(function() {
 		}
 	};
 
-	//TODO: This line is for testing.
-	$('h1').click(modalData.openModal);
-
-	//Close modal if someone clicks on "X" within the modal, or they click outside of the modal
-	$(modalData.closeBtn).click(modalData.closeModal);
-	$(window).click(modalData.closeModal);
-
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 	//Updating the Array prototype so we can use .shuffle as an array method
 	Array.prototype.shuffle = function() {
@@ -107,12 +100,9 @@ $(function() {
 				gameData.matches += 1;
 
 				//Alert **after** the other card has been flipped.
-				//TODO: Turn this into a modal
 				setTimeout(function(){
 					if (gameData.matches === 8) {
-						//TODO: Make this a modal, ask if want to play again, if yes reset the board, else do nothing
-						//alert('Game over, all cards matched. Your final score is ' + $('.stars li').length + ' stars.');
-						//modalData.openModal();
+						modalData.openModal();
 					}
 				}, 1000);
 
@@ -190,6 +180,10 @@ $(function() {
 	});
 
 	generateNewGame();
+
+	//Close modal if someone clicks on "X" within the modal, or they click outside of the modal
+	$(modalData.closeBtn).click(modalData.closeModal);
+	$(window).click(modalData.closeModal);
 
 /*
  * set up the event listener for a card. If a card is clicked:

@@ -12,7 +12,7 @@ $(function() {
 	var modalData = {
 		modal: $('#simpleModal'),
 		closeBtn: $('#closeBtn'),
-		openModal: function() {
+		openWinModal: function() {
 			modalData.modal[0].style.display = 'block';
 			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' stars.')
 		},
@@ -102,7 +102,7 @@ $(function() {
 				//Alert **after** the other card has been flipped.
 				setTimeout(function(){
 					if (gameData.matches === 8) {
-						modalData.openModal();
+						modalData.openWinModal();
 					}
 				}, 1000);
 

@@ -118,7 +118,6 @@ h1, body {
     top: 0;
     width: 100%;
     height: 100%;
-    /*overflow: auto;*/
     background-color: rgba(0,0,0,0.5);  /*this part makes the background a dark but transparent color*/
 }
 
@@ -132,6 +131,22 @@ h1, body {
     /*@keyframes at the end will put in the functionality of animation*/
     animation-name: modalopen;
     animation-duration: 1s;
+}
+
+.modalBtn {
+    /*display: none;*/
+    background: #02ccba;
+    padding: 1em 2em;
+    color: #eee;
+    border: 0;
+}
+
+.modalBtn:hover {
+    background: #00776d;
+}
+
+.modalBtn:first-of-type {
+    margin-right: 1px;
 }
 
 #closeBtn {

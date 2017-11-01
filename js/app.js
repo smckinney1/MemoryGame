@@ -23,6 +23,8 @@ $(function() {
 		}
 	};
 
+	$('h1').click(modalData.openWinModal);
+
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 	//Updating the Array prototype so we can use .shuffle as an array method
 	Array.prototype.shuffle = function() {

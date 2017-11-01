@@ -18,7 +18,6 @@ body {
 
 body {
     background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
-    font-family: 'Coda', cursive;
 }
 
 .container {
@@ -28,9 +27,8 @@ body {
     flex-direction: column;
 }
 
-h1 {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
+h1, body {
+    font-family: 'Nunito', sans-serif;
 }
 
 /*
@@ -106,4 +104,50 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/*
+ * Styles for modals (thanks to TraversyMedia at https://www.youtube.com/watch?v=6ophW7Ask_0)
+ */
+
+ .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /*overflow: auto;*/
+    background-color: rgba(0,0,0,0.5);  /*this part makes the background a dark but transparent color*/
+}
+
+.modal-content {
+    background-color: #f4f4f4;
+    margin: 10% auto;           /*Change the first value to control how far down the modal is on the screen. 2nd value centers it?*/
+    padding: 20px;
+    width: 40%;                 /*Change this value so that the modal takes up more or less space on the screen*/
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
+    
+    /*@keyframes at the end will put in the functionality of animation*/
+    animation-name: modalopen;
+    animation-duration: 1s;
+}
+
+#closeBtn {
+    color: #ccc;
+    float: right;               /*Float right to get it to show on the right side of modal*/
+    font-size: 30px;
+}
+
+#closeBtn:hover, #closeBtn:focus {
+    color: #fff;                /*On hover/focus the X goes white*/
+    text-decoration: none;      /*No underline*/
+    cursor: pointer;
+}
+
+/*In specified duration of 1 second in .modal-content, the modal will fade in*/
+@keyframes modalopen {
+    from { opacity: 0 }
+    to { opacity: 1 }
 }

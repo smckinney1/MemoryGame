@@ -7,7 +7,27 @@ $(function() {
 		matches: 0,
 		clickedCards: [],
 		starsHTML: '<li><i class="fa fa-star"></i></li>'
-	}
+	};
+
+	//TODO: Turn this into constructor?
+	var modalData = {
+		modal: $('#simpleModal'),
+		closeBtn: $('#closeBtn'),
+		openModal: function() {
+			modalData.modal[0].style.display = 'block';
+			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' stars.')
+		},
+		closeModal: function(e) {
+			if (e.target == modalData.modal || e.target == modalData.closeBtn) {
+				console.log('x');
+				//modalData.modal[0].style.display = 'none';
+			}
+		}
+	};
+
+	$('h1').click(modalData.openModal);
+	$(modalData.closeBtn).click(modalData.closeModal);
+	$(window).click(modalData.closeModal);
 
 	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 	//Updating the Array prototype so we can use .shuffle as an array method
@@ -90,7 +110,8 @@ $(function() {
 				setTimeout(function(){
 					if (gameData.matches === 8) {
 						//TODO: Make this a modal, ask if want to play again, if yes reset the board, else do nothing
-						alert('Game over, all cards matched. Your final score is ' + $('.stars').length + ' stars.');
+						//alert('Game over, all cards matched. Your final score is ' + $('.stars').length + ' stars.');
+						//modalData.openModal();
 					}
 				}, 1000);
 

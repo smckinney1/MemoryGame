@@ -18,8 +18,8 @@ Array.prototype.shuffle = function() {
 var gameData = {};
 
 var modalData = {
-	modal: $('#simpleModal'),
-	closeBtn: $('#closeBtn'),
+	modal: $('#simple-modal'),
+	closeBtn: $('#close-btn'),
 	openModal: function(e) {
 		modalData.modal[0].style.display = 'block';
 		if (!e) {

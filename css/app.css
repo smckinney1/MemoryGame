@@ -138,7 +138,7 @@ h1, body {
     text-align: right;
 }
 
-.modalBtn {
+.modal-btn {
     /*display: none;*/
     background: #02ccba;
     padding: 1em 2em;
@@ -146,21 +146,21 @@ h1, body {
     /*border: 0;*/
 }
 
-.modalBtn:hover {
+.modal-btn:hover {
     background: #00776d;
 }
 
-.modalBtn:first-of-type {
+.modal-btn:first-of-type {
     margin-right: 1px;
 }
 
-#closeBtn {
+#close-btn {
     color: #ccc;
     float: right;               /*Float right to get it to show on the right side of modal*/
     font-size: 30px;
 }
 
-#closeBtn:hover, #closeBtn:focus {
+#close-btn:hover, #close-btn:focus {
     color: #fff;                /*On hover/focus the X goes white*/
     text-decoration: none;      /*No underline*/
     cursor: pointer;

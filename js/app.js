@@ -14,116 +14,164 @@ Array.prototype.shuffle = function() {
     return input;
 }
 
-$(function() {
+var gameData = {
+	openCards: [],
+	score: 0,
+	moves: 0,
+	matches: 0,
+	clickedCards: [],
+	starsHTML: '<li><i class="fa fa-star"></i></li>'
+};
 
-	var gameData = {
-		openCards: [],
-		score: 0, //may combine with 'moves' later
-		moves: 0,
-		matches: 0,
-		clickedCards: [],
-		starsHTML: '<li><i class="fa fa-star"></i></li>'
-	};
-
-	var modalData = {
-		modal: $('#simpleModal'),
-		closeBtn: $('#closeBtn'),
-		openModal: function(e) {
-			modalData.modal[0].style.display = 'block';
-			if (!e) {
-				$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' stars.');
-			} else {
-				$('#game-end').text('Are you sure you wish to restart the game?');
-				$('.btn-group').css('display', 'block');
-			}
-		},
-		closeModal: function(e) {
-			//close the modal if the event target is the close button or outside of the modal content
-			if (e.target == modalData.modal[0] || e.target == modalData.closeBtn[0]) {
-				modalData.modal[0].style.display = 'none';
-			}
+var modalData = {
+	modal: $('#simpleModal'),
+	closeBtn: $('#closeBtn'),
+	openModal: function(e) {
+		modalData.modal[0].style.display = 'block';
+		if (!e) {
+			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' stars.');
+		} else {
+			$('#game-end').text('Are you sure you wish to restart the game?');
+			$('.btn-group').css('display', 'block');
 		}
-	};
+	},
+	closeModal: function(e) {
+		//close the modal if the event target is the close button or outside of the modal content
+		if (e.target == modalData.modal[0] || e.target == modalData.closeBtn[0]) {
+			modalData.modal[0].style.display = 'none';
+		}
+	}
+};
+
+function Card(cardClass) {
+	//preserve the context of "this"
+	var self = this;
+	
+	self.cardClass = cardClass;
+	self.isOpen = false;
+
+	//creating a new element for the DOM - not actually appending it here
+	self.listItem = $('<li class="card"><i class="' + cardClass + '"></i></li>');
+
+	self.listItem.on('click', function (e) {
+		self.onCardClick(e);
+	});
+
+}
+
+//click handler for Card constructor
+Card.prototype.onCardClick = function(e) {
+	//If a card is already open, or if there are already 2 cards clicked on the screen, don't proceed.
+	if (this.isOpen || gameData.clickedCards.length === 2) {
+		return false;
+	}
+
+	var clickedEl = e.target;
+
+	gameData.clickedCards.push(this);
+	clickedEl.classList.add('open', 'show');
+	this.isOpen = true;
+	this.checkMatch();
+}
+
+Card.prototype.checkMatch = function() {
+	//if 1 card is shown: add new card to shown cards list, then check for match
+	//if 0 cards are shown: add new card to shown cards list
+	//ON MATCH: Clear the array of shown cards, change the class to include 'match'
+	if (gameData.clickedCards.length === 2) {
+		var card1 = gameData.clickedCards[0].listItem[0];
+		var card2 = gameData.clickedCards[1].listItem[0];
+		var card1Class = card1.firstElementChild.getAttribute('class');
+		var card2Class = card2.firstElementChild.getAttribute('class');
+
+		gameData.moves++;
+		$('.moves').text(gameData.moves);
+
+		if (gameData.moves > 12 && gameData.moves < 19) {
+			$('.stars').html(gameData.starsHTML + gameData.starsHTML);
+		} else if (gameData.moves >= 19) {
+			$('.stars').html(gameData.starsHTML);
+		}
+
+		if (card1Class === card2Class) {
+			card1.classList.add('match');
+			card2.classList.add('match');
+			gameData.matches += 1;
+
+			//Alert **after** the other card has been flipped.
+			setTimeout(function(){
+				if (gameData.matches === 8) {
+					modalData.openModal();
+				}
+			}, 1000);
+
+			gameData.clickedCards = [];
+
+		} else {
+			setTimeout(function() {
+				card1.setAttribute('class', 'card');
+				card2.setAttribute('class', 'card');
+				gameData.clickedCards.forEach(function(card) {
+					card.isOpen = false;
+				});
+				gameData.clickedCards = [];
+			}, 2000);
+		}
+	}
+}
+
+function generateNewGame() {
+
+	//reset all game data
+	gameData.openCards = [];
+	gameData.score = 0;
+	gameData.moves = 0;
+	gameData.matches = 0;
+	gameData.clickedCards = [];
+	$('.moves').text(0);
+	$('.stars').empty();
+	$('.stars').append(gameData.starsHTML + gameData.starsHTML + gameData.starsHTML);
+
+	var listOfCardClasses = [
+		'fa fa-diamond',
+		'fa fa-paper-plane-o',
+		'fa fa-anchor',
+		'fa fa-bolt',
+		'fa fa-leaf',
+		'fa fa-bicycle',
+		'fa fa-cube',
+		'fa fa-bomb'
+	];
+
+	var listOfCards = [];
+
+	//generate a new card for each class and add it twice to the list of cards
+	//this allows 16 cards to be generated on the screen
+	listOfCardClasses.forEach(function(cardClass) {
+		//create 2 card with same class and push to list
+		var card1 = new Card(cardClass);
+		var card2 = new Card(cardClass);
+		listOfCards.push(card1, card2);
+	});
+
+	//shuffle the cards and add the correct CSS class to each one
+	listOfCards.shuffle();
+	listOfCards.forEach(function(card) {
+		$('.deck').append(card.listItem);
+	});
+}
+
+//Restart game
+$('.restart').click(modalData.openModal);
+
+//Close modal if someone clicks on "X" within the modal, or they click outside of the modal
+$(modalData.closeBtn).click(modalData.closeModal);
+$(window).click(modalData.closeModal);
+
+$(function() {
 
 	//TODO: Remove test
 	$('h1').click(modalData.openModal);
-
-	function Card(cardClass) {
-		//preserve the context of "this"
-		var self = this;
-		
-		self.cardClass = cardClass;
-		self.isOpen = false;
-
-		//creating a new element for the DOM - not actually appending it here
-		self.listItem = $('<li class="card"><i class="' + cardClass + '"></i></li>');
-
-		self.listItem.on('click', function (e) {
-			self.onCardClick(e);
-		});
-
-	}
-
-	//click handler for Card constructor
-	Card.prototype.onCardClick = function(e) {
-		//If a card is already open, or if there are already 2 cards clicked on the screen, don't proceed.
-		if (this.isOpen || gameData.clickedCards.length === 2) {
-			return false;
-		}
-
-		var clickedEl = e.target;
-
-		gameData.clickedCards.push(this);
-		clickedEl.classList.add('open', 'show');
-		this.isOpen = true;
-		this.checkMatch();
-	}
-
-	Card.prototype.checkMatch = function() {
-		//if 1 card is shown: add new card to shown cards list, then check for match
-		//if 0 cards are shown: add new card to shown cards list
-		//ON MATCH: Clear the array of shown cards, change the class to include 'match'
-		if (gameData.clickedCards.length === 2) {
-			var card1 = gameData.clickedCards[0].listItem[0];
-			var card2 = gameData.clickedCards[1].listItem[0];
-			var card1Class = card1.firstElementChild.getAttribute('class');
-			var card2Class = card2.firstElementChild.getAttribute('class');
-
-			gameData.moves++;
-			$('.moves').text(gameData.moves);
-
-			if (gameData.moves > 12 && gameData.moves < 19) {
-				$('.stars').html(gameData.starsHTML + gameData.starsHTML);
-			} else if (gameData.moves >= 19) {
-				$('.stars').html(gameData.starsHTML);
-			}
-
-			if (card1Class === card2Class) {
-				card1.classList.add('match');
-				card2.classList.add('match');
-				gameData.matches += 1;
-
-				//Alert **after** the other card has been flipped.
-				setTimeout(function(){
-					if (gameData.matches === 8) {
-						modalData.openModal();
-					}
-				}, 1000);
-
-				gameData.clickedCards = [];
-
-			} else {
-				setTimeout(function() {
-					card1.setAttribute('class', 'card');
-					card2.setAttribute('class', 'card');
-					gameData.clickedCards.forEach(function(card) {
-						card.isOpen = false;
-					});
-					gameData.clickedCards = [];
-				}, 2000);
-			}
-		}
-	}
 
 /*	Card.prototype.show = function() {
 		//update class of card to include "open show"
@@ -133,46 +181,6 @@ $(function() {
 
 	//Shuffle the deck and add cards to DOM
 	//Display the cards face-down on the page
-	function generateNewGame() {
-
-		//reset all game data
-		gameData.openCards = [];
-		gameData.score = 0;
-		gameData.moves = 0;
-		gameData.matches = 0;
-		gameData.clickedCards = [];
-		$('.moves').text(0);
-		$('.stars').empty();
-		$('.stars').append(gameData.starsHTML + gameData.starsHTML + gameData.starsHTML);
-
-		var listOfCardClasses = [
-			'fa fa-diamond',
-			'fa fa-paper-plane-o',
-			'fa fa-anchor',
-			'fa fa-bolt',
-			'fa fa-leaf',
-			'fa fa-bicycle',
-			'fa fa-cube',
-			'fa fa-bomb'
-		];
-
-		var listOfCards = [];
-
-		//generate a new card for each class and add it twice to the list of cards
-		//this allows 16 cards to be generated on the screen
-		listOfCardClasses.forEach(function(cardClass) {
-			//create 2 card with same class and push to list
-			var card1 = new Card(cardClass);
-			var card2 = new Card(cardClass);
-			listOfCards.push(card1, card2);
-		});
-
-		//shuffle the cards and add the correct CSS class to each one
-		listOfCards.shuffle();
-		listOfCards.forEach(function(card) {
-			$('.deck').append(card.listItem);
-		});
-	}
 
 /*	$('.restart').click(function() {
 		//ask user if they really want to restart
@@ -185,22 +193,5 @@ $(function() {
 
 	generateNewGame();
 
-	//Restart game
-	$('.restart').click(modalData.openModal);
-
-	//Close modal if someone clicks on "X" within the modal, or they click outside of the modal
-	$(modalData.closeBtn).click(modalData.closeModal);
-	$(window).click(modalData.closeModal);
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 });
 

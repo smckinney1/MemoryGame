@@ -1,3 +1,19 @@
+//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
+//Updating the Array prototype so we can use .shuffle as an array method
+Array.prototype.shuffle = function() {
+    var input = this;
+     
+    for (var i = input.length - 1; i >= 0; i--) {
+     
+        var randomIndex = Math.floor(Math.random()*(i+1)); 
+        var itemAtIndex = input[randomIndex]; 
+         
+        input[randomIndex] = input[i]; 
+        input[i] = itemAtIndex;
+    }
+    return input;
+}
+
 $(function() {
 
 	var gameData = {
@@ -12,34 +28,25 @@ $(function() {
 	var modalData = {
 		modal: $('#simpleModal'),
 		closeBtn: $('#closeBtn'),
-		openWinModal: function() {
+		openModal: function(e) {
 			modalData.modal[0].style.display = 'block';
-			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' stars.')
+			if (!e) {
+				$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' stars.');
+			} else {
+				$('#game-end').text('Are you sure you wish to restart the game?');
+				$('.btn-group').css('display', 'block');
+			}
 		},
 		closeModal: function(e) {
+			//close the modal if the event target is the close button or outside of the modal content
 			if (e.target == modalData.modal[0] || e.target == modalData.closeBtn[0]) {
 				modalData.modal[0].style.display = 'none';
 			}
 		}
 	};
 
-	$('h1').click(modalData.openWinModal);
-
-	//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
-	//Updating the Array prototype so we can use .shuffle as an array method
-	Array.prototype.shuffle = function() {
-	    var input = this;
-	     
-	    for (var i = input.length - 1; i >= 0; i--) {
-	     
-	        var randomIndex = Math.floor(Math.random()*(i+1)); 
-	        var itemAtIndex = input[randomIndex]; 
-	         
-	        input[randomIndex] = input[i]; 
-	        input[i] = itemAtIndex;
-	    }
-	    return input;
-	}
+	//TODO: Remove test
+	$('h1').click(modalData.openModal);
 
 	function Card(cardClass) {
 		//preserve the context of "this"
@@ -52,11 +59,6 @@ $(function() {
 		self.listItem = $('<li class="card"><i class="' + cardClass + '"></i></li>');
 
 		self.listItem.on('click', function (e) {
-			//below function will carry the context of the card with it
-			//this = <li>...</li>
-			//self = the context of this card
-
-			//TODO: Prevent anything from happening if card has already been clicked (use this.isOpen)
 			self.onCardClick(e);
 		});
 
@@ -104,7 +106,7 @@ $(function() {
 				//Alert **after** the other card has been flipped.
 				setTimeout(function(){
 					if (gameData.matches === 8) {
-						modalData.openWinModal();
+						modalData.openModal();
 					}
 				}, 1000);
 
@@ -172,16 +174,19 @@ $(function() {
 		});
 	}
 
-	$('.restart').click(function() {
+/*	$('.restart').click(function() {
 		//ask user if they really want to restart
 		//TODO: Make this a modal
 		if(confirm('Are you sure you wish to restart?')) {
 			$('.card').remove();
 			generateNewGame();
 		}
-	});
+	});*/
 
 	generateNewGame();
+
+	//Restart game
+	$('.restart').click(modalData.openModal);
 
 	//Close modal if someone clicks on "X" within the modal, or they click outside of the modal
 	$(modalData.closeBtn).click(modalData.closeModal);

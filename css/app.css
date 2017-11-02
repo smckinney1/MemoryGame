@@ -133,12 +133,17 @@ h1, body {
     animation-duration: 1s;
 }
 
+.btn-group {
+    display: none;
+    text-align: right;
+}
+
 .modalBtn {
     /*display: none;*/
     background: #02ccba;
     padding: 1em 2em;
     color: #eee;
-    border: 0;
+    /*border: 0;*/
 }
 
 .modalBtn:hover {

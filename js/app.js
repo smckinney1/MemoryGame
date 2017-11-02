@@ -157,37 +157,25 @@ function generateNewGame() {
 	});
 }
 
+function confirmRestart() {
+	$('.card').remove();
+	modalData.modal[0].style.display = 'none';
+	generateNewGame();
+}
+
 //CLICK HANDLERS
 
 //Restart game
 $('.restart').click(modalData.openModal);
+
+//Confirm restart
+$('.restart-confirm').click(confirmRestart);
 
 //Close modal if someone clicks on "X" within the modal, or they click outside of the modal
 $(modalData.closeBtn).click(modalData.closeModal);
 $(window).click(modalData.closeModal);
 
 $(function() {
-
-	//TODO: Remove test
-	$('h1').click(modalData.openModal);
-
-/*	Card.prototype.show = function() {
-		//update class of card to include "open show"
-		this.isOpen = true;
-		this.classList.add('open', 'show');
-	}*/
-
-
-/*	$('.restart').click(function() {
-		//ask user if they really want to restart
-		//TODO: Make this a modal
-		if(confirm('Are you sure you wish to restart?')) {
-			$('.card').remove();
-			generateNewGame();
-		}
-	});*/
-
 	generateNewGame();
-
 });
 

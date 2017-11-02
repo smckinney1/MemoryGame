@@ -1,3 +1,5 @@
+//Animate.css library available here: https://github.com/daneden/animate.css
+//Extending jQuery object allows us to use animateCss as a method to a $-wrapped object
 $.fn.extend({
     animateCss: function (animationName) {
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -48,7 +50,6 @@ var modalData = {
 };
 
 function Card(cardClass) {
-	//preserve the context of "this"
 	var self = this;
 	
 	self.cardClass = cardClass;
@@ -82,9 +83,8 @@ Card.prototype.onCardClick = function(e) {
 }
 
 Card.prototype.compareCards = function() {
-	//if 1 card is shown: add new card to shown cards list, then check for match
-	//if 0 cards are shown: add new card to shown cards list
-	//ON MATCH: Clear the array of shown cards, change the class to include 'match'
+
+	//Ensure there are 2 open cards shown on screen
 	if (gameData.clickedCards.length === 2) {
 
 		trackMovesAndScore();
@@ -147,7 +147,7 @@ function trackMovesAndScore () {
 
 function generateNewGame() {
 
-	//reset all game data
+	//initialize all game data to defaults
 	gameData.openCards = [];
 	gameData.score = 0;
 	gameData.moves = 0;
@@ -172,16 +172,14 @@ function generateNewGame() {
 
 	var listOfCards = [];
 
-	//generate a new card for each class and add it twice to the list of cards
-	//this allows 16 cards to be generated on the screen
+	//generate two instances of each card class and add to overall list of cards
 	listOfCardClasses.forEach(function(cardClass) {
-		//create 2 card with same class and push to list
 		var card1 = new Card(cardClass);
 		var card2 = new Card(cardClass);
 		listOfCards.push(card1, card2);
 	});
 
-	//shuffle the cards and add the correct CSS class to each one
+	//shuffle the list of cards and add the correct CSS class to each one
 	listOfCards.shuffle();
 	listOfCards.forEach(function(card) {
 		$('.deck').append(card.listItem);
@@ -213,4 +211,3 @@ $(window).click(modalData.closeModal);
 $(function() {
 	generateNewGame();
 });
-

@@ -33,7 +33,7 @@ var modalData = {
 	openModal: function(e) {
 		modalData.modal[0].style.display = 'block';
 		if (!e) {
-			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' stars.');
+			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' star(s).');
 		} else {
 			$('#game-end').text('Are you sure you wish to restart the game?');
 			$('.btn-group').css('display', 'block');
@@ -65,6 +65,7 @@ function Card(cardClass) {
 
 //click handler for Card constructor
 Card.prototype.onCardClick = function(e) {
+
 	//If a card is already open, or if there are already 2 cards clicked on the screen, don't proceed.
 	if (this.isOpen || gameData.clickedCards.length === 2) {
 		return false;
@@ -77,28 +78,23 @@ Card.prototype.onCardClick = function(e) {
 	gameData.clickedCards.push(this);
 	clickedEl.classList.add('open', 'show');
 	this.isOpen = true;
-	this.checkMatch();
+	this.compareCards();
 }
 
-Card.prototype.checkMatch = function() {
+Card.prototype.compareCards = function() {
 	//if 1 card is shown: add new card to shown cards list, then check for match
 	//if 0 cards are shown: add new card to shown cards list
 	//ON MATCH: Clear the array of shown cards, change the class to include 'match'
 	if (gameData.clickedCards.length === 2) {
+
+		trackMovesAndScore();
+
 		var card1 = gameData.clickedCards[0].listItem[0];
 		var card2 = gameData.clickedCards[1].listItem[0];
 		var card1Class = card1.firstElementChild.getAttribute('class');
 		var card2Class = card2.firstElementChild.getAttribute('class');
 
-		gameData.moves++;
-		$('.moves').text(gameData.moves);
-
-		if (gameData.moves > 15 && gameData.moves < 19) {
-			$('.stars').html(gameData.starsHTML + gameData.starsHTML);
-		} else if (gameData.moves >= 19) {
-			$('.stars').html(gameData.starsHTML);
-		}
-
+		//Check match
 		if (card1Class === card2Class) {
 			card1.classList.add('match');
 			card2.classList.add('match');
@@ -135,6 +131,17 @@ Card.prototype.checkMatch = function() {
 				gameData.clickedCards = [];
 			}, 2000);
 		}
+	}
+}
+
+function trackMovesAndScore () {
+	gameData.moves++;
+	$('.moves').text(gameData.moves);
+
+	if (gameData.moves > 15 && gameData.moves < 20) {
+		$('.stars').html(gameData.starsHTML + gameData.starsHTML);
+	} else if (gameData.moves >= 20) {
+		$('.stars').html(gameData.starsHTML);
 	}
 }
 
@@ -182,12 +189,12 @@ function generateNewGame() {
 }
 
 function confirmRestart() {
-	$('#game-end').text('Refreshing game data.');
+	$('#game-end').text('Refreshing game data...');
 	setTimeout(function() {
 		$('.card').remove();
 		modalData.modal[0].style.display = 'none';
 		generateNewGame();
-	}, 1000);
+	}, 1800);
 }
 
 //CLICK HANDLERS

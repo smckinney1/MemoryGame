@@ -81,7 +81,7 @@ Card.prototype.checkMatch = function() {
 		gameData.moves++;
 		$('.moves').text(gameData.moves);
 
-		if (gameData.moves > 12 && gameData.moves < 19) {
+		if (gameData.moves > 15 && gameData.moves < 19) {
 			$('.stars').html(gameData.starsHTML + gameData.starsHTML);
 		} else if (gameData.moves >= 19) {
 			$('.stars').html(gameData.starsHTML);

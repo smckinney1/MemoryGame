@@ -1,3 +1,13 @@
+$.fn.extend({
+    animateCss: function (animationName) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+        });
+        return this;
+    }
+});
+
 //Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 //Updating the Array prototype so we can use .shuffle as an array method
 Array.prototype.shuffle = function() {
@@ -62,6 +72,8 @@ Card.prototype.onCardClick = function(e) {
 
 	var clickedEl = e.target;
 
+	$(clickedEl).animateCss('flipInY');
+
 	gameData.clickedCards.push(this);
 	clickedEl.classList.add('open', 'show');
 	this.isOpen = true;
@@ -92,6 +104,12 @@ Card.prototype.checkMatch = function() {
 			card2.classList.add('match');
 			gameData.matches += 1;
 
+			setTimeout(function() {
+				//TODO: Change this to use .animateCSS method if possible
+				card1.setAttribute('class', 'card open show match animated pulse');
+				card2.setAttribute('class', 'card open show match animated pulse');
+			}, 500);
+
 			//Alert **after** the other card has been flipped.
 			setTimeout(function(){
 				if (gameData.matches === 8) {
@@ -102,6 +120,12 @@ Card.prototype.checkMatch = function() {
 			gameData.clickedCards = [];
 
 		} else {
+			setTimeout(function() {
+				//TODO: Change this to use .animateCSS method if possible
+				card1.setAttribute('class', 'card open show animated shake');
+				card2.setAttribute('class', 'card open show animated shake');
+			}, 500);
+
 			setTimeout(function() {
 				card1.setAttribute('class', 'card');
 				card2.setAttribute('class', 'card');

@@ -14,14 +14,8 @@ Array.prototype.shuffle = function() {
     return input;
 }
 
-var gameData = {
-	openCards: [],
-	score: 0,
-	moves: 0,
-	matches: 0,
-	clickedCards: [],
-	starsHTML: '<li><i class="fa fa-star"></i></li>'
-};
+//gameData is set within generateNewGame()
+var gameData = {};
 
 var modalData = {
 	modal: $('#simpleModal'),
@@ -128,6 +122,8 @@ function generateNewGame() {
 	gameData.moves = 0;
 	gameData.matches = 0;
 	gameData.clickedCards = [];
+	gameData.starsHTML = '<li><i class="fa fa-star"></i></li>';
+
 	$('.moves').text(0);
 	$('.stars').empty();
 	$('.stars').append(gameData.starsHTML + gameData.starsHTML + gameData.starsHTML);
@@ -161,6 +157,8 @@ function generateNewGame() {
 	});
 }
 
+//CLICK HANDLERS
+
 //Restart game
 $('.restart').click(modalData.openModal);
 
@@ -179,8 +177,6 @@ $(function() {
 		this.classList.add('open', 'show');
 	}*/
 
-	//Shuffle the deck and add cards to DOM
-	//Display the cards face-down on the page
 
 /*	$('.restart').click(function() {
 		//ask user if they really want to restart

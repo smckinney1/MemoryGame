@@ -158,9 +158,12 @@ function generateNewGame() {
 }
 
 function confirmRestart() {
-	$('.card').remove();
-	modalData.modal[0].style.display = 'none';
-	generateNewGame();
+	$('#game-end').text('Refreshing game data.');
+	setTimeout(function() {
+		$('.card').remove();
+		modalData.modal[0].style.display = 'none';
+		generateNewGame();
+	}, 1000);
 }
 
 //CLICK HANDLERS
@@ -175,6 +178,7 @@ $('.restart-confirm').click(confirmRestart);
 $(modalData.closeBtn).click(modalData.closeModal);
 $(window).click(modalData.closeModal);
 
+//Generate new game when document is finished loading
 $(function() {
 	generateNewGame();
 });

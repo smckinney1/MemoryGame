@@ -1,4 +1,3 @@
-//Animate.css library available here: https://github.com/daneden/animate.css
 //Extending jQuery object allows us to use animateCss as a method to a $-wrapped object
 $.fn.extend({
     animateCss: function (animationName) {
@@ -10,7 +9,6 @@ $.fn.extend({
     }
 });
 
-//Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 //Updating the Array prototype so we can use .shuffle as an array method
 Array.prototype.shuffle = function() {
     let input = this;

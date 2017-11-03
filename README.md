@@ -2,19 +2,37 @@
 
 ## Table of Contents
 
+* [About](#about)
 * [Instructions](#instructions)
 * [Contributing](#contributing)
+* [Code](#code)
+
+## About
+
+This project provides practice with creating constructor functions, modifying prototypes, asynchronous scripting, and a mix of functional and object-oriented programming.
+
+Cards are represented by Font Awesome icon classes.
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+Players should match cards on screen until all cards have been matched. The game will track how many moves a player has made as well as determine a score based on the number of moves, represented by star icons. The star score defaults to three and will decrease with a greater number of moves made.
 
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+If a player wishes, they can restart the game at any time by clicking the refresh icon in the upper right.
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+At this time I am not accepting pull requests on this project. This may change in the future if I decide to further build this game out.
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## Code
+
+Udacity provided the basic structure of the HTML and most of the CSS. I made modifications to the HTML where I felt necessary, including adding a modal, and added CSS related to the modal within the CSS file. All JavaScript code, minus the Array.prototype.shuffle() method, is my own.
+
+Thanks to Kirupa.com for the aforementioned Array.prototype.shuffle() method: https://www.kirupa.com/html5/shuffling_array_js.htm
+
+Rather than using Bootstrap modals or jQuery UI, I elected to learn how to create a modal on my own using Traversy Media's YouTube tutorial. I modified styling and markup where I felt appropriate: https://www.youtube.com/watch?v=6ophW7Ask_0
+
+Libraries used:
+-- jQuery
+-- Animate.css
+
+Also thanks to Font Awesome for the icons used on the cards, and Google Fonts for the font I used throughout the app.

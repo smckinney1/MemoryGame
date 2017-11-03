@@ -35,10 +35,11 @@ let modalData = {
 	openModal: function(e) {
 		modalData.modal[0].style.display = 'block';
 		if (!e) {
+			$('.btn-group').css('display', 'none');
 			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' star(s).');
 		} else {
-			$('#game-end').text('Are you sure you wish to restart the game?');
 			$('.btn-group').css('display', 'block');
+			$('#game-end').text('Are you sure you wish to restart the game?');
 		}
 	},
 	closeModal: function(e) {
@@ -189,6 +190,7 @@ function generateNewGame() {
 
 function confirmRestart() {
 	$('#game-end').text('Refreshing game data...');
+	$('.btn-group').css('display', 'none');
 	setTimeout(function() {
 		$('.card').remove();
 		modalData.modal[0].style.display = 'none';

@@ -107,7 +107,7 @@ h1, body {
 }
 
 /*
- * Styles for modals (thanks to TraversyMedia at https://www.youtube.com/watch?v=6ophW7Ask_0)
+ * Modal
  */
 
  .modal {
@@ -118,14 +118,14 @@ h1, body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);  /*this part makes the background a dark but transparent color*/
+    background-color: rgba(0,0,0,0.5);
 }
 
 .modal-content {
     background-color: #f4f4f4;
-    margin: 10% auto;           /*Change the first value to control how far down the modal is on the screen. 2nd value centers it?*/
+    margin: 10% auto;
     padding: 20px;
-    width: 40%;                 /*Change this value so that the modal takes up more or less space on the screen*/
+    width: 40%;
     box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
     
     /*@keyframes at the end will put in the functionality of animation*/
@@ -139,11 +139,10 @@ h1, body {
 }
 
 .modal-btn {
-    /*display: none;*/
     background: #02ccba;
     padding: 1em 2em;
     color: #eee;
-    /*border: 0;*/
+    border: 0;
 }
 
 .modal-btn:hover {
@@ -156,13 +155,13 @@ h1, body {
 
 #close-btn {
     color: #ccc;
-    float: right;               /*Float right to get it to show on the right side of modal*/
+    float: right;
     font-size: 30px;
 }
 
 #close-btn:hover, #close-btn:focus {
-    color: #fff;                /*On hover/focus the X goes white*/
-    text-decoration: none;      /*No underline*/
+    color: #fff;
+    text-decoration: none;
     cursor: pointer;
 }
 

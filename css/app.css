@@ -29,6 +29,24 @@ body {
 
 h1, body {
     font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+}
+
+h1 {
+    margin: 10px 0 0 0;
+    font-size: 42px;
+}
+
+/*
+ * Styles for the timer
+ */
+
+.timer {
+    text-align: center;
+    font-size: 24px;
+    margin: 5px 0 5px 0;
+    color: #a080cb;
+    font-weight: 700;
 }
 
 /*

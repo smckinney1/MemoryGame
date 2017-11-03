@@ -2,7 +2,7 @@
 //Extending jQuery object allows us to use animateCss as a method to a $-wrapped object
 $.fn.extend({
     animateCss: function (animationName) {
-        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
         this.addClass('animated ' + animationName).one(animationEnd, function() {
             $(this).removeClass('animated ' + animationName);
         });
@@ -13,23 +13,23 @@ $.fn.extend({
 //Shuffle function from https://www.kirupa.com/html5/shuffling_array_js.htm
 //Updating the Array prototype so we can use .shuffle as an array method
 Array.prototype.shuffle = function() {
-    var input = this;
+    let input = this;
      
-    for (var i = input.length - 1; i >= 0; i--) {
+    for (let i = input.length - 1; i >= 0; i--) {
      
-        var randomIndex = Math.floor(Math.random()*(i+1)); 
-        var itemAtIndex = input[randomIndex]; 
+        let randomIndex = Math.floor(Math.random()*(i+1));
+        let itemAtIndex = input[randomIndex];
          
-        input[randomIndex] = input[i]; 
+        input[randomIndex] = input[i];
         input[i] = itemAtIndex;
     }
     return input;
 }
 
 //gameData is set within generateNewGame()
-var gameData = {};
+let gameData = {};
 
-var modalData = {
+let modalData = {
 	modal: $('#simple-modal'),
 	closeBtn: $('#close-btn'),
 	openModal: function(e) {
@@ -49,10 +49,13 @@ var modalData = {
 	}
 };
 
+//Card constructor function
 function Card(cardClass) {
-	var self = this;
+	let self = this;
 	
+	//cardClass handles the image displayed from Font Awesome for this card instance
 	self.cardClass = cardClass;
+
 	self.isOpen = false;
 
 	//creating a new element for the DOM - not actually appending it here
@@ -72,7 +75,7 @@ Card.prototype.onCardClick = function(e) {
 		return false;
 	}
 
-	var clickedEl = e.target;
+	let clickedEl = e.target;
 
 	$(clickedEl).animateCss('flipInY');
 
@@ -89,10 +92,10 @@ Card.prototype.compareCards = function() {
 
 		trackMovesAndScore();
 
-		var card1 = gameData.clickedCards[0].listItem[0];
-		var card2 = gameData.clickedCards[1].listItem[0];
-		var card1Class = card1.firstElementChild.getAttribute('class');
-		var card2Class = card2.firstElementChild.getAttribute('class');
+		let card1 = gameData.clickedCards[0].listItem[0];
+		let card2 = gameData.clickedCards[1].listItem[0];
+		let card1Class = card1.firstElementChild.getAttribute('class');
+		let card2Class = card2.firstElementChild.getAttribute('class');
 
 		//Check match
 		if (card1Class === card2Class) {
@@ -101,7 +104,6 @@ Card.prototype.compareCards = function() {
 			gameData.matches += 1;
 
 			setTimeout(function() {
-				//TODO: Change this to use .animateCSS method if possible
 				card1.setAttribute('class', 'card open show match animated pulse');
 				card2.setAttribute('class', 'card open show match animated pulse');
 			}, 500);
@@ -117,7 +119,6 @@ Card.prototype.compareCards = function() {
 
 		} else {
 			setTimeout(function() {
-				//TODO: Change this to use .animateCSS method if possible
 				card1.setAttribute('class', 'card open show animated shake');
 				card2.setAttribute('class', 'card open show animated shake');
 			}, 500);
@@ -159,7 +160,7 @@ function generateNewGame() {
 	$('.stars').empty();
 	$('.stars').append(gameData.starsHTML + gameData.starsHTML + gameData.starsHTML);
 
-	var listOfCardClasses = [
+	let listOfCardClasses = [
 		'fa fa-diamond',
 		'fa fa-paper-plane-o',
 		'fa fa-anchor',
@@ -170,12 +171,12 @@ function generateNewGame() {
 		'fa fa-bomb'
 	];
 
-	var listOfCards = [];
+	let listOfCards = [];
 
 	//generate two instances of each card class and add to overall list of cards
 	listOfCardClasses.forEach(function(cardClass) {
-		var card1 = new Card(cardClass);
-		var card2 = new Card(cardClass);
+		let card1 = new Card(cardClass);
+		let card2 = new Card(cardClass);
 		listOfCards.push(card1, card2);
 	});
 

@@ -48,16 +48,25 @@ let modalData = {
 	}
 };
 
-let timerData = {
+var timerData = {
 	hours: 0,
 	minutes: 0,
 	seconds: 0,
 	timeCounter: function() {
-		this.seconds += 1;
-		let timeFormatted = this.timeFormatter(this.seconds);
+		timerData.seconds += 1;
+		var timeFormatted = timerData.timeFormatter(timerData.seconds);
 		$('.timer').text('Hours: ' + timeFormatted[0] + ', Minutes: ' + timeFormatted[1] + ', Seconds: ' + timeFormatted[2]);
+	},
+	timeFormatter: function(sec) {
+		if (sec % 60 === 0 && sec !== 0) {
+			timerData.seconds = 0;
+		    timerData.minutes += 1;
+		} else if (timerData.minutes % 60 === 0 && timerData.minutes !== 0) {
+		  	timerData.minutes = 0;
+		    timerData.hours += 1;
+		}
+		return [timerData.hours, timerData.minutes, timerData.seconds];
 	}
-
 }
 
 //Card constructor function
@@ -169,7 +178,7 @@ function generateNewGame() {
 	gameData.matches = 0;
 	gameData.clickedCards = [];
 	gameData.starsHTML = '<li><i class="fa fa-star"></i></li>';
-	gameData.timer = setInterval(timerData.timeCounter);
+	gameData.timer = setInterval(timerData.timeCounter, 1000);
 
 	$('.moves').text(0);
 	$('.stars').empty();

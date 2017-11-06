@@ -51,9 +51,6 @@ let modalData = {
 //TODO: Stop interval when restarting the game
 //TODO: Format timer like this: 00:00:00
 var timerData = {
-	hours: 0,
-	minutes: 0,
-	seconds: 0,
 	timeCounter: function() {
 		timerData.seconds += 1;
 		var timeFormatted = timerData.timeFormatter(timerData.seconds);
@@ -169,6 +166,14 @@ function trackMovesAndScore () {
 }
 
 function generateNewGame() {
+
+	//reset timer itself
+	clearInterval(timerData.timeCounter);	
+
+	//reset timer data
+	timerData.hours = 0;
+	timerData.minutes = 0;
+	timerData.seconds = 0;
 
 	//initialize all game data to defaults
 	gameData.hours = 0;

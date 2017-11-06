@@ -48,6 +48,18 @@ let modalData = {
 	}
 };
 
+let timerData = {
+	hours: 0,
+	minutes: 0,
+	seconds: 0,
+	timeCounter: function() {
+		this.seconds += 1;
+		let timeFormatted = this.timeFormatter(this.seconds);
+		$('.timer').text('Hours: ' + timeFormatted[0] + ', Minutes: ' + timeFormatted[1] + ', Seconds: ' + timeFormatted[2]);
+	}
+
+}
+
 //Card constructor function
 function Card(cardClass) {
 	let self = this;
@@ -148,12 +160,16 @@ function trackMovesAndScore () {
 function generateNewGame() {
 
 	//initialize all game data to defaults
+	gameData.hours = 0;
+	gameData.minutes = 0;
+	gameData.seconds = 0;
 	gameData.openCards = [];
 	gameData.score = 0;
 	gameData.moves = 0;
 	gameData.matches = 0;
 	gameData.clickedCards = [];
 	gameData.starsHTML = '<li><i class="fa fa-star"></i></li>';
+	gameData.timer = setInterval(timerData.timeCounter);
 
 	$('.moves').text(0);
 	$('.stars').empty();

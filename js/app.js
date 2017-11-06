@@ -48,6 +48,8 @@ let modalData = {
 	}
 };
 
+//TODO: Stop interval when restarting the game
+//TODO: Format timer like this: 00:00:00
 var timerData = {
 	hours: 0,
 	minutes: 0,

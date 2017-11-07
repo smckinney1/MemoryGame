@@ -29,7 +29,7 @@ At this time I am not accepting pull requests on this project. This may change i
 
 ## Code
 
-Udacity provided the basic structure of the HTML and most of the CSS. I made modifications to the HTML where I felt necessary, including adding a modal, and added CSS related to the modal within the CSS file. All JavaScript code, minus the Array.prototype.shuffle() method, is my own.
+Udacity provided the basic structure of the HTML and most of the CSS. I made modifications to the HTML where I felt necessary, including adding a modal, and added CSS related to the modal within the CSS file. All JavaScript code, minus the Array.prototype.shuffle() method and the extension of jQuery to have an animateCss method, is my own.
 
 Thanks to Kirupa.com for the aforementioned [Array.prototype.shuffle() method](https://www.kirupa.com/html5/shuffling_array_js.htm).
 

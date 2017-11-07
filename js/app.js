@@ -50,10 +50,10 @@ let modalData = {
 
 //TODO: Stop interval when restarting the game
 //TODO: Format timer like this: 00:00:00
-var timerData = {
+let timerData = {
 	timeCounter: function() {
 		timerData.seconds += 1;
-		var timeFormatted = timerData.timeFormatter(timerData.seconds);
+		let timeFormatted = timerData.timeFormatter(timerData.seconds);
 		$('.timer').text('Hours: ' + timeFormatted[0] + ', Minutes: ' + timeFormatted[1] + ', Seconds: ' + timeFormatted[2]);
 	},
 	timeFormatter: function(sec) {

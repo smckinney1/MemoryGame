@@ -9,7 +9,7 @@
 
 ## About
 
-This project provides practice with creating constructor functions, modifying prototypes, asynchronous scripting, and a mix of functional and object-oriented programming.
+This project provides practice with creating constructor functions, modifying prototypes, asynchronous scripting, asynchronous programming, and a mix of functional and object-oriented programming.
 
 Cards are represented by Font Awesome icon classes.
 
@@ -18,6 +18,8 @@ Cards are represented by Font Awesome icon classes.
 Players should match cards on screen until all cards have been matched. The game will track how many moves a player has made as well as determine a score based on the number of moves, represented by star icons. The star score defaults to three and will decrease with a greater number of moves made.
 
 If a player wishes, they can restart the game at any time by clicking the refresh icon in the upper right.
+
+A timer tracks how long it takes to finish the game. It is reset when restarting the game.
 
 ## Contributing
 

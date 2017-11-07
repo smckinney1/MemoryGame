@@ -48,8 +48,6 @@ let modalData = {
 	}
 };
 
-//TODO: More elegant transition when create new game to the reset timer
-//TODO: Stop the timer when game ends
 //hours, minutes, seconds created in resetTimerData()
 let timerData = {
 	timeCounter: function() {
@@ -58,7 +56,7 @@ let timerData = {
             timerData.seconds = 0;
             timerData.minutes += 1;
         } else if (timerData.minutes % 60 === 0 && timerData.minutes !== 0) {
-              timerData.minutes = 0;
+            timerData.minutes = 0;
             timerData.hours += 1;
         }
         let seconds = timerData.timeFormatter(timerData.seconds);
@@ -67,6 +65,7 @@ let timerData = {
         $('.timer').text(hours + ':' + minutes + ':' + seconds);
 	},
 	timeFormatter: function(timeVal) {
+		//Add "0" to the front of timeVal if it's less than 10
 		return timeVal < 10 ? (timeVal = '0' + timeVal) : timeVal;
 	}
 }
@@ -131,11 +130,12 @@ Card.prototype.compareCards = function() {
 			}, 500);
 
 			//Alert **after** the other card has been flipped.
-			setTimeout(function(){
-				if (gameData.matches === 8) {
+			if (gameData.matches === 8) {
+				clearInterval(gameData.timer);
+				setTimeout(function() {
 					modalData.openModal();
-				}
-			}, 1000);
+				}, 1000);
+			}
 
 			gameData.clickedCards = [];
 
@@ -172,6 +172,7 @@ function generateNewGame() {
 
 	resetTimerData();
 	resetGameData();
+	$('.timer').text('00:00:00');
 
 	$('.moves').text(0);
 	$('.stars').empty();
@@ -237,8 +238,6 @@ function confirmRestart() {
 		generateNewGame();
 	}, 1800);
 }
-
-//CLICK HANDLERS
 
 //Restart game
 $('.restart').click(modalData.openModal);

@@ -31,8 +31,11 @@ let modalData = {
 	modal: $('#simple-modal'),
 	closeBtn: $('#close-btn'),
 	openModal: function(e) {
+		//Show the modal and the restart button
 		modalData.modal[0].style.display = 'block';
 		$('.btn-group').css('display', 'block');
+
+		//If the modal is attached to a click handler, restart game. Else, the modal has been triggered because the game has been won.
 		if (!e) {
 			$('#game-end').text('You win! You completed the game in ' + $('.timer').text() + '. Your final score is ' + $('.stars li').length + ' star(s).');
 		} else {
@@ -51,6 +54,8 @@ let modalData = {
 let timerData = {
 	timeCounter: function() {
 		timerData.seconds += 1;
+
+		//Keep accurate count of hours, minutes, seconds each time seconds or minutes reaches 60
         if (timerData.seconds % 60 === 0 && timerData.seconds !== 0) {
             timerData.seconds = 0;
             timerData.minutes += 1;
@@ -58,6 +63,8 @@ let timerData = {
             timerData.minutes = 0;
             timerData.hours += 1;
         }
+
+        //Format the timer to hh:mm:ss
         let seconds = timerData.timeFormatter(timerData.seconds);
         let minutes = timerData.timeFormatter(timerData.minutes); 
         let hours = timerData.timeFormatter(timerData.hours);
@@ -71,6 +78,8 @@ let timerData = {
 
 //Card constructor function
 function Card(cardClass) {
+
+	//Allows click handler on the list items to function, as the reference to "this" is preserved
 	let self = this;
 	
 	//cardClass handles the image displayed from Font Awesome for this card instance
@@ -87,10 +96,12 @@ function Card(cardClass) {
 
 }
 
-//click handler for Card constructor
+//click handler for each card
 Card.prototype.onCardClick = function(e) {
 
 	gameData.openCards++;
+
+	//start the timer if the first card has been clicked
 	if (gameData.openCards === 1) startTimer();
 
 	//If a card is already open, or if there are already 2 cards clicked on the screen, don't proceed.
@@ -101,10 +112,13 @@ Card.prototype.onCardClick = function(e) {
 	let clickedEl = e.target;
 
 	$(clickedEl).animateCss('flipInY');
-
-	gameData.clickedCards.push(this);
 	clickedEl.classList.add('open', 'show');
+
+	//Add to the list of clicked cards
+	gameData.clickedCards.push(this);
 	this.isOpen = true;
+
+	//Trigger card comparison function
 	this.compareCards();
 }
 
@@ -113,25 +127,28 @@ Card.prototype.compareCards = function() {
 	//Ensure there are 2 open cards shown on screen
 	if (gameData.clickedCards.length === 2) {
 
+		//Update the score and number of moves
 		trackMovesAndScore();
 
+		//Getting the class of the two current cards
 		let card1 = gameData.clickedCards[0].listItem[0];
 		let card2 = gameData.clickedCards[1].listItem[0];
 		let card1Class = card1.firstElementChild.getAttribute('class');
 		let card2Class = card2.firstElementChild.getAttribute('class');
 
-		//Check match
+		//Check match between the two cards based on their class
 		if (card1Class === card2Class) {
 			card1.classList.add('match');
 			card2.classList.add('match');
 			gameData.matches += 1;
 
+			//Pulse cards if there is a match
 			setTimeout(function() {
 				card1.setAttribute('class', 'card open show match animated pulse');
 				card2.setAttribute('class', 'card open show match animated pulse');
 			}, 500);
 
-			//Alert **after** the other card has been flipped.
+			//When game is won, stop the timer and open the game-win modal
 			if (gameData.matches === 8) {
 				clearInterval(gameData.timer);
 				setTimeout(function() {
@@ -139,14 +156,18 @@ Card.prototype.compareCards = function() {
 				}, 1000);
 			}
 
+			//
 			gameData.clickedCards = [];
 
 		} else {
+
+			//First, shake the cards if there's no match
 			setTimeout(function() {
 				card1.setAttribute('class', 'card open show animated shake');
 				card2.setAttribute('class', 'card open show animated shake');
 			}, 500);
 
+			//Then, reset the card classes back to hidden position and reset the array of currently clicked cards.
 			setTimeout(function() {
 				card1.setAttribute('class', 'card');
 				card2.setAttribute('class', 'card');
@@ -159,6 +180,7 @@ Card.prototype.compareCards = function() {
 	}
 }
 
+//Updates moves and star count
 function trackMovesAndScore () {
 	gameData.moves++;
 	$('.moves').text(gameData.moves);
@@ -180,6 +202,7 @@ function generateNewGame() {
 	$('.stars').empty();
 	$('.stars').append(gameData.starsHTML + gameData.starsHTML + gameData.starsHTML);
 
+	//Each class associated with different picture on the card
 	let listOfCardClasses = [
 		'fa fa-diamond',
 		'fa fa-paper-plane-o',
@@ -207,6 +230,7 @@ function generateNewGame() {
 	});
 }
 
+//Controls the timer shown at the top of the screen
 function startTimer() {
 	gameData.timer = setInterval(timerData.timeCounter, 1000);
 }
@@ -234,6 +258,7 @@ function resetTimerData() {
 	timerData.seconds = 0;
 }
 
+//Ensure user meant to click "restart" before actually restarting the game
 function confirmRestart() {
 	$('#game-end').text('Refreshing game data...');
 	$('.btn-group').css('display', 'none');

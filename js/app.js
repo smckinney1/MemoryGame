@@ -48,24 +48,26 @@ let modalData = {
 	}
 };
 
-//TODO: Stop interval when restarting the game
-//TODO: Format timer like this: 00:00:00
-//hours, minutes, seconds assigned in generateNewGame()
+//TODO: More elegant transition when create new game to the reset timer
+//TODO: Stop the timer when game ends
+//hours, minutes, seconds created in resetTimerData()
 let timerData = {
 	timeCounter: function() {
 		timerData.seconds += 1;
-		let timeFormatted = timerData.timeFormatter(timerData.seconds);
-		$('.timer').text('Hours: ' + timeFormatted[0] + ', Minutes: ' + timeFormatted[1] + ', Seconds: ' + timeFormatted[2]);
+        if (timerData.seconds % 60 === 0 && timerData.seconds !== 0) {
+            timerData.seconds = 0;
+            timerData.minutes += 1;
+        } else if (timerData.minutes % 60 === 0 && timerData.minutes !== 0) {
+              timerData.minutes = 0;
+            timerData.hours += 1;
+        }
+        let seconds = timerData.timeFormatter(timerData.seconds);
+        let minutes = timerData.timeFormatter(timerData.minutes); 
+        let hours = timerData.timeFormatter(timerData.hours);
+        $('.timer').text(hours + ':' + minutes + ':' + seconds);
 	},
-	timeFormatter: function(sec) {
-		if (sec % 60 === 0 && sec !== 0) {
-			timerData.seconds = 0;
-		    timerData.minutes += 1;
-		} else if (timerData.minutes % 60 === 0 && timerData.minutes !== 0) {
-		  	timerData.minutes = 0;
-		    timerData.hours += 1;
-		}
-		return [timerData.hours, timerData.minutes, timerData.seconds];
+	timeFormatter: function(timeVal) {
+		return timeVal < 10 ? (timeVal = '0' + timeVal) : timeVal;
 	}
 }
 

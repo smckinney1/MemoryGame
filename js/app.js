@@ -90,6 +90,9 @@ function Card(cardClass) {
 //click handler for Card constructor
 Card.prototype.onCardClick = function(e) {
 
+	gameData.openCards++;
+	if (gameData.openCards === 1) startTimer();
+
 	//If a card is already open, or if there are already 2 cards clicked on the screen, don't proceed.
 	if (this.isOpen || gameData.clickedCards.length === 2) {
 		return false;
@@ -204,6 +207,10 @@ function generateNewGame() {
 	});
 }
 
+function startTimer() {
+	gameData.timer = setInterval(timerData.timeCounter, 1000);
+}
+
 function resetGameData() {
 	//initialize all game data to defaults
 	gameData.hours = 0;
@@ -215,7 +222,6 @@ function resetGameData() {
 	gameData.matches = 0;
 	gameData.clickedCards = [];
 	gameData.starsHTML = '<li><i class="fa fa-star"></i></li>';
-	gameData.timer = setInterval(timerData.timeCounter, 1000);
 }
 
 function resetTimerData() {

@@ -32,11 +32,10 @@ let modalData = {
 	closeBtn: $('#close-btn'),
 	openModal: function(e) {
 		modalData.modal[0].style.display = 'block';
+		$('.btn-group').css('display', 'block');
 		if (!e) {
-			$('.btn-group').css('display', 'none');
-			$('#game-end').text('You win! Your final score is ' + $('.stars li').length + ' star(s).');
+			$('#game-end').text('You win! You completed the game in ' + $('.timer').text() + '. Your final score is ' + $('.stars li').length + ' star(s).');
 		} else {
-			$('.btn-group').css('display', 'block');
 			$('#game-end').text('Are you sure you wish to restart the game?');
 		}
 	},

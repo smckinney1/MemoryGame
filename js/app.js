@@ -168,25 +168,8 @@ function trackMovesAndScore () {
 
 function generateNewGame() {
 
-	//reset timer itself
-	clearInterval(gameData.timer);	
-
-	//reset timer data
-	timerData.hours = 0;
-	timerData.minutes = 0;
-	timerData.seconds = 0;
-
-	//initialize all game data to defaults
-	gameData.hours = 0;
-	gameData.minutes = 0;
-	gameData.seconds = 0;
-	gameData.openCards = [];
-	gameData.score = 0;
-	gameData.moves = 0;
-	gameData.matches = 0;
-	gameData.clickedCards = [];
-	gameData.starsHTML = '<li><i class="fa fa-star"></i></li>';
-	gameData.timer = setInterval(timerData.timeCounter, 1000);
+	resetTimerData();
+	resetGameData();
 
 	$('.moves').text(0);
 	$('.stars').empty();
@@ -217,6 +200,30 @@ function generateNewGame() {
 	listOfCards.forEach(function(card) {
 		$('.deck').append(card.listItem);
 	});
+}
+
+function resetGameData() {
+	//initialize all game data to defaults
+	gameData.hours = 0;
+	gameData.minutes = 0;
+	gameData.seconds = 0;
+	gameData.openCards = [];
+	gameData.score = 0;
+	gameData.moves = 0;
+	gameData.matches = 0;
+	gameData.clickedCards = [];
+	gameData.starsHTML = '<li><i class="fa fa-star"></i></li>';
+	gameData.timer = setInterval(timerData.timeCounter, 1000);
+}
+
+function resetTimerData() {
+	//reset timer itself
+	clearInterval(gameData.timer);	
+
+	//reset timer data
+	timerData.hours = 0;
+	timerData.minutes = 0;
+	timerData.seconds = 0;
 }
 
 function confirmRestart() {

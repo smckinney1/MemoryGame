@@ -262,6 +262,7 @@ function resetTimerData() {
 function confirmRestart() {
 	$('#game-end').text('Refreshing game data...');
 	$('.btn-group').css('display', 'none');
+	resetTimerData();
 	setTimeout(function() {
 		$('.card').remove();
 		modalData.modal[0].style.display = 'none';

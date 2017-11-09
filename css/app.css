@@ -192,10 +192,12 @@ h1 {
     to { opacity: 1 }
 }
 
+/*
+ * Media queries
+ */
+
 @media screen and (max-width: 575px) {
     h1 {
-        /*text-align: center;
-        font-size: 42px;*/
         display: none;
     }
     .score-panel {
@@ -217,6 +219,5 @@ h1 {
     .deck .card {
         width: 60px;
         height: 60px;
-        /*margin-top: 25px;*/
     }
 }

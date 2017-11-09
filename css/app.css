@@ -38,15 +38,19 @@ h1 {
 }
 
 /*
- * Styles for the timer
+ * Styles for the score panel and timer
  */
+
+.score-panel {
+    font-size: 24px;
+}
 
 .timer {
     text-align: center;
-    font-size: 24px;
     margin: 5px 0 5px 0;
     color: #a080cb;
     font-weight: 700;
+    font-size: 32px;
 }
 
 /*
@@ -54,8 +58,8 @@ h1 {
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
+    width: 630px;
+    height: 630px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
@@ -186,4 +190,33 @@ h1 {
 @keyframes modalopen {
     from { opacity: 0 }
     to { opacity: 1 }
+}
+
+@media screen and (max-width: 575px) {
+    h1 {
+        /*text-align: center;
+        font-size: 42px;*/
+        display: none;
+    }
+    .score-panel {
+        text-align: center;
+    }
+    .timer, .moves, .restart, .stars {
+        font-size: 32px;
+    }
+    .span-wrapper {
+        display: block;
+    }
+    .score-panel .restart {
+        float: none;
+    }
+    .deck {
+        width: 340px;
+        height: 340px;
+    }
+    .deck .card {
+        width: 60px;
+        height: 60px;
+        /*margin-top: 25px;*/
+    }
 }

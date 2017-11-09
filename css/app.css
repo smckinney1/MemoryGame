@@ -200,6 +200,9 @@ h1 {
     h1 {
         display: none;
     }
+    .modal-content {
+        width: 80%;
+    }
     .score-panel {
         text-align: center;
     }
